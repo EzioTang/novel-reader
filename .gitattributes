@@ -1,0 +1,13 @@
+* text=auto eol=lf
+
+# Windows 批处理必须保留 CRLF
+*.cmd text eol=crlf
+
+# 二进制
+*.png binary
+*.jpg binary
+*.ico binary
+*.zip binary
+
+# 样例文本保留原样，避免换行被改写影响切章验收
+*.txt -text

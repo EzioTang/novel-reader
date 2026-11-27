@@ -1,0 +1,8 @@
+# pnpm 11 起，pnpm 自身设置全部写在这里（package.json 的 pnpm 字段与 .npmrc 已不再承载）。
+# 依赖商店、构建脚本白名单都落在本目录内，便于整体迁移或删除。
+storeDir: .pnpm-store
+
+# 只放行确实需要跑安装脚本的依赖：electron 要下载运行时二进制，esbuild 要校验本地可执行文件。
+allowBuilds:
+  electron: true
+  esbuild: true

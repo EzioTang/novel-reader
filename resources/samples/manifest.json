@@ -1,0 +1,128 @@
+{
+  "generatedAt": "2026-11-26T07:21:57.502Z",
+  "samples": [
+    {
+      "file": "01-standard-chapter.txt",
+      "style": "标准 第X章",
+      "headings": [
+        "第一章 风起1",
+        "第二章 风起2",
+        "第三章 风起3",
+        "第四章 风起4",
+        "第五章 风起5",
+        "第六章 风起6",
+        "第七章 风起7",
+        "第八章 风起8"
+      ]
+    },
+    {
+      "file": "02-volume-chapter.txt",
+      "style": "卷+章两级",
+      "headings": [
+        "第一章 起",
+        "第二章 承",
+        "第三章 转",
+        "第四章 合",
+        "第五章 别",
+        "第六章 归",
+        "第七章 望",
+        "第八章 渡",
+        "第九章 尽"
+      ],
+      "volumes": [
+        "第一卷 山雨",
+        "第二卷 长夜",
+        "第三卷 归途"
+      ]
+    },
+    {
+      "file": "03-english-chapter.txt",
+      "style": "英文 Chapter",
+      "headings": [
+        "Chapter 1 The Long Way",
+        "Chapter 2 The Long Way",
+        "Chapter 3 The Long Way",
+        "Chapter 4 The Long Way",
+        "Chapter 5 The Long Way",
+        "Chapter 6 The Long Way"
+      ]
+    },
+    {
+      "file": "04-numeric-title.txt",
+      "style": "数字标题",
+      "headings": [
+        "1、第1次远行",
+        "2、第2次远行",
+        "3、第3次远行",
+        "4、第4次远行",
+        "5、第5次远行",
+        "6、第6次远行",
+        "7、第7次远行"
+      ]
+    },
+    {
+      "file": "05-special-title.txt",
+      "style": "序章/尾声/番外",
+      "headings": [
+        "序章",
+        "楔子",
+        "第一章 入山",
+        "第二章 遇雨",
+        "第三章 出山",
+        "尾声",
+        "番外"
+      ]
+    },
+    {
+      "file": "06-decorated.txt",
+      "style": "带装饰符号标题",
+      "headings": [
+        "第一章 灯下",
+        "第二章 灯下",
+        "第三章 灯下",
+        "第四章 灯下",
+        "第五章 灯下",
+        "第六章 灯下"
+      ]
+    },
+    {
+      "file": "07-no-heading.txt",
+      "style": "无标题裸文本",
+      "headings": [],
+      "expectStrategy": "char-count"
+    },
+    {
+      "file": "08-blank-line.txt",
+      "style": "空行短行",
+      "headings": [
+        "雨夜",
+        "旧信",
+        "长街",
+        "归人"
+      ],
+      "expectStrategy": "blank-line"
+    },
+    {
+      "file": "09-indented.txt",
+      "style": "全角缩进标题",
+      "headings": [
+        "第一章 缩进",
+        "第二章 缩进",
+        "第三章 缩进",
+        "第四章 缩进",
+        "第五章 缩进"
+      ]
+    },
+    {
+      "file": "10-mixed-numeral.txt",
+      "style": "中文数字/阿拉伯数字混排",
+      "headings": [
+        "第一章 混排一",
+        "第2章 混排二",
+        "第三章 混排三",
+        "第4章 混排四",
+        "第五章 混排五"
+      ]
+    }
+  ]
+}
