@@ -21,6 +21,7 @@ node scripts/run.mjs e2e        # Playwright 驱动真实 Electron 的全链路�
 node scripts/run.mjs typecheck  # tsc --noEmit
 node scripts/run.mjs lint       # ESLint
 node scripts/run.mjs verify     # typecheck + lint + test + build
+node scripts/run.mjs dist       # 构建 + 打 Windows 安装包 → release/
 ```
 
 > 为什么多了 `scripts/run.mjs`：本机 PowerShell 执行策略禁用了 `npm.ps1`（`npm` 直接跑会报"禁止运行脚本"），
@@ -52,11 +53,23 @@ node scripts/run.mjs verify     # typecheck + lint + test + build
 ├─ shared/              IPC 契约、编码探测（主/渲染共用）
 ├─ tests/               Vitest（含样例库与真实书库验收）
 ├─ e2e/                 Playwright Electron 冒烟 + 全链路
-├─ scripts/             样例书库生成
+├─ scripts/             样例书库生成、统一运行入口 run.mjs
 ├─ resources/samples/   10 本合成样例 + manifest.json
+├─ resources/icon.ico   应用图标（8 档尺寸）
+├─ electron-builder.yml 打包配置（NSIS 安装包 + 免安装 zip）
+├─ release/             打包产物（已 gitignore，作为 GitHub Release 附件）
 ├─ .npmrc / pnpm-workspace.yaml   依赖商店与镜像（全部留在本目录）
 └─ package.json / tsconfig.json / electron.vite.config.ts / vitest.config.ts / playwright.config.ts
 ```
+
+## 打包发布
+
+```bash
+node scripts/run.mjs dist        # 构建 + 打包，产物输出到 release/
+```
+
+产物：`novel-reader-<版本>-x64.exe`（NSIS 安装包）、`novel-reader-<版本>-x64.zip`（免安装）、
+`SHA256SUMS.txt`、`发行说明.md`。`release/` 不进 git，发布时作为 GitHub Release 附件上传。
 
 ## 数据与环境落点
 
@@ -65,6 +78,7 @@ node scripts/run.mjs verify     # typecheck + lint + test + build
 | 依赖 | `node_modules/`、`.pnpm-store/`（pnpm 商店，项目内） |
 | Electron 二进制缓存 | `.electron-cache/`（`electron_config_cache`） |
 | 构建产物 | `out/` |
+| 打包产物 | `release/`（安装包、免安装 zip、校验和、发行说明） |
 | 书籍正文 / 章节 / 进度 | 本机 IndexedDB（Electron userData） |
 | 字号等阅读设置 | localStorage |
 | 测试产物（截图、trace） | `test-results/` |

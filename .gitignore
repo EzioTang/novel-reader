@@ -9,6 +9,9 @@ playwright-report/
 .DS_Store
 Thumbs.db
 
+# 打包产物（安装包/免安装 zip 体积大，发布时作为 GitHub Release 附件上传，不入库）
+release/
+
 # 项目根目录下的 .txt 一律不入库：放的是本地书库样本（体积大、版权归原作者）。
 # 仓库自带的样例书在 resources/samples/ 下，不受此规则影响。
 /*.txt

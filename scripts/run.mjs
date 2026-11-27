@@ -22,6 +22,30 @@ const TASKS = {
   lint: ['node_modules/eslint/bin/eslint.js', ['.']],
   test: ['node_modules/vitest/vitest.mjs', ['run']],
   e2e: ['node_modules/@playwright/test/cli.js', ['test']],
+  // 只打包、不重新构建（构建产物需要已存在）
+  package: ['node_modules/electron-builder/cli.js', ['--win', '--config', 'electron-builder.yml']],
+}
+
+/** 顺序执行，返回是否全部成功 */
+async function runSequence(tasks) {
+  for (const task of tasks) {
+    console.log(`\n=== ${task} ===`)
+    const [script, args] = TASKS[task]
+    const code = await new Promise((resolve) => {
+      const env = { ...process.env }
+      delete env.ELECTRON_RUN_AS_NODE
+      spawn(process.execPath, [join(root, script), ...args], {
+        cwd: root,
+        env,
+        stdio: 'inherit',
+      }).on('exit', resolve)
+    })
+    if (code !== 0) {
+      console.error(`\n${task} 失败，已中止。`)
+      return false
+    }
+  }
+  return true
 }
 
 function run(task) {
@@ -49,30 +73,22 @@ function run(task) {
 const task = process.argv[2]
 
 if (!task) {
-  console.log(`用法：node scripts/run.mjs <${Object.keys(TASKS).join('|')}|verify>`)
+  console.log(`用法：node scripts/run.mjs <${Object.keys(TASKS).join('|')}|verify|dist>`)
   process.exit(1)
 }
 
 if (task === 'verify') {
-  const sequence = ['typecheck', 'lint', 'test', 'build']
-  for (const step of sequence) {
-    console.log(`\n=== ${step} ===`)
-    const [script, args] = TASKS[step]
-    const code = await new Promise((resolve) => {
-      const env = { ...process.env }
-      delete env.ELECTRON_RUN_AS_NODE
-      spawn(process.execPath, [join(root, script), ...args], {
-        cwd: root,
-        env,
-        stdio: 'inherit',
-      }).on('exit', resolve)
-    })
-    if (code !== 0) {
-      console.error(`\n${step} 失败，已中止。`)
-      process.exit(code ?? 1)
-    }
-  }
+  const ok = await runSequence(['typecheck', 'lint', 'test', 'build'])
+  if (!ok) process.exit(1)
   console.log('\n全部通过：typecheck / lint / test / build')
+  process.exit(0)
+}
+
+// 打包发布：先构建，再用 electron-builder 出安装包与免安装 zip
+if (task === 'dist') {
+  const ok = await runSequence(['build', 'package'])
+  if (!ok) process.exit(1)
+  console.log('\n打包完成，产物在 release/')
   process.exit(0)
 }
 
